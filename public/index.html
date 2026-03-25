@@ -9,46 +9,59 @@
 </head>
 <body>
 
+  <!-- شريط اللغات -->
+  <div class="lang-bar">
+    <div class="lang-selector" id="langSelector">
+      <button class="lang-btn" onclick="toggleLangMenu()">
+        🌍 <span id="currentLang">العربية</span> ▾
+      </button>
+      <div class="lang-menu" id="langMenu">
+        <div class="lang-option" onclick="setLang('ar')"> العربية</div>
+        <div class="lang-option" onclick="setLang('en')">us English</div>
+        <div class="lang-option" onclick="setLang('es')">🇪🇸 Español</div>
+        <div class="lang-option" onclick="setLang('de')">🇩🇪 Deutsch</div>
+      </div>
+    </div>
+  </div>
+
   <header>
-    <div class="header-badge">✨ مدعوم بالذكاء الاصطناعي</div>
-    <h1>محلل السيرة الذاتية</h1>
-    <p>ارفع الـ CV بتاعك وهنحلله في ثواني ونديك تقرير احترافي كامل</p>
+    <div class="header-badge" id="txt-badge">✨ مدعوم بالذكاء الاصطناعي</div>
+    <h1 id="txt-title">محلل السيرة الذاتية</h1>
+    <p id="txt-subtitle">ارفع الـ CV بتاعك وهنحلله في ثواني ونديك تقرير احترافي كامل</p>
   </header>
 
   <main>
-
     <div class="upload-box" id="uploadBox">
       <div class="upload-icon">📄</div>
-      <h2>ارفع الـ CV بتاعك</h2>
-      <p>PDF أو صورة — الحجم الأقصى 10MB</p>
+      <h2 id="txt-upload-title">ارفع الـ CV بتاعك</h2>
+      <p id="txt-upload-sub">PDF أو صورة — الحجم الأقصى 10MB</p>
       <input type="file" id="cvFile" accept=".pdf,.jpg,.jpeg,.png,.webp" hidden>
-      <button class="btn-upload" onclick="document.getElementById('cvFile').click()">
+      <button class="btn-upload" onclick="document.getElementById('cvFile').click()" id="txt-choose">
         اختار ملف
       </button>
-      <p class="file-name" id="fileName">لم يتم اختيار ملف</p>
+      <p class="file-name" id="fileName" data-default="لم يتم اختيار ملف">لم يتم اختيار ملف</p>
     </div>
 
     <button class="btn-analyze" id="analyzeBtn" onclick="analyzeCV()" disabled>
-      🔍 حلل الـ CV دلوقتي
+      <span id="txt-analyze">🔍 حلل الـ CV دلوقتي</span>
     </button>
 
     <div class="loading" id="loading" hidden>
       <div class="spinner"></div>
-      <p>جاري تحليل الـ CV بالذكاء الاصطناعي...</p>
+      <p id="txt-loading">جاري تحليل الـ CV بالذكاء الاصطناعي...</p>
     </div>
 
     <div class="result-box" id="resultBox" hidden>
-      <h2>📊 نتيجة التحليل</h2>
+      <h2 id="txt-result-title">📊 نتيجة التحليل</h2>
       <div class="result-content" id="resultContent"></div>
-      <button class="btn-upload" style="margin-top:20px" onclick="resetForm()">
+      <button class="btn-upload" style="margin-top:20px" onclick="resetForm()" id="txt-reset">
         🔄 حلل CV تاني
       </button>
     </div>
-
   </main>
 
   <footer>
-    <p>محلل السيرة الذاتية  </p>
+    <p id="txt-footer">© 2026 CV Analyzer — جميع الحقوق محفوظة</p>
   </footer>
 
   <script src="script.js"></script>

@@ -3,7 +3,9 @@ const multer = require('multer');
 const pdfParse = require('pdf-parse');
 const Groq = require('groq-sdk');
 const sharp = require('sharp');
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;

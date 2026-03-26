@@ -79,6 +79,6 @@ app.post('/analyze', upload.single('cv'), async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ السيرفر شغال على http://localhost:${PORT}`);
 });

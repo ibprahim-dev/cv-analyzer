@@ -3,6 +3,7 @@ const multer = require('multer');
 const pdfParse = require('pdf-parse');
 const Groq = require('groq-sdk');
 const sharp = require('sharp');
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
@@ -35,18 +36,27 @@ app.post('/analyze', upload.single('cv'), async (req, res) => {
     const SYSTEM_PROMPT = `${userPrompt} يتضمن:
 
 **1. نقاط القوة ✅**
-اذكر كل نقاط القوة بالتفصيل
+اذكر كل نقاط القوة بالتفصيل مع أمثلة من الـ CV نفسه
 
 **2. نقاط الضعف ⚠️**
 اذكر كل نقاط الضعف بوضوح — وتأكد إنك تذكر لو مفيش صورة شخصية في الـ CV
 
-**3. نصائح للتحسين 💡**
+**3. تنبيهات ⚡**
+لو لاحظت أي تناقض في المعلومات مثل:
+- سنين الخبرة مقارنة بسنة التخرج
+- مهارات تبدو مبالغ فيها مقارنة بالمستوى العام
+- معلومات ناقصة أو غير واضحة
+اذكرها بشكل لطيف كتنبيه فقط دون إصدار حكم نهائي
+
+**4. نصائح للتحسين 💡**
 قدم نصائح عملية ومحددة — وذكّر بأهمية إضافة صورة شخصية احترافية لو مش موجودة
 
-**4. التقييم العام 🎯**
-قيّم الـ CV من 10 مع شرح سبب التقييم — وخصم نقطة لو مفيش صورة شخصية
+**5. التقييم العام 🎯**
+قيّم الـ CV من 10 مع شرح سبب التقييم — مع مراعاة:
+- خصم نقطة لو مفيش صورة شخصية
+- خصم نقطة لو في تناقضات واضحة في المعلومات
 
-كن صريحاً ومفيداً في تحليلك.`;
+كن صريحاً ومحترماً ومفيداً في تحليلك.`;
 
     let cvText = '';
 
@@ -58,7 +68,7 @@ app.post('/analyze', upload.single('cv'), async (req, res) => {
       }
     } else {
       const imageBuffer = await sharp(req.file.buffer).jpeg({ quality: 90 }).toBuffer();
-      cvText = `[CV Image - analyze based on professional CV standards]`;
+      cvText = '[CV Image - analyze based on professional CV standards]';
     }
 
     const completion = await groq.chat.completions.create({
